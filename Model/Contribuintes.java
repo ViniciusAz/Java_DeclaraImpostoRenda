@@ -100,14 +100,14 @@ public class Contribuintes implements Contribuinte{
 		return total;
 	}
 
-	private double getTotalTributavel() {
+	public double getTotalTributavel() {
 		double total = 0;
 		for (Rendimento r : rendimento)
 			total += r.getTotalTributavel();
 		return total;
 	}
 	
-	private double getTotalAbateDespesaTitular() {
+	public double getTotalAbateDespesaTitular() {
 		double educa = 0,
 			   saude = 0;
 		for (Despesa d : despesa) {
@@ -121,7 +121,7 @@ public class Contribuintes implements Contribuinte{
 		return (saude + educa) * 0.5;
 	}
 	
-	private double getTotalAbateDespesaDependentes(Pessoa p) {
+	public double getTotalAbateDespesaDependentes(Pessoa p) {
 		double educa = 0, 
 			   saude = 0;
 		for (Despesa d : despesa) {
@@ -135,6 +135,14 @@ public class Contribuintes implements Contribuinte{
 		return educa + (saude * 0.5);
 	}
 	
+	public double getAbateDepensasTodosDependentes() {
+		double despDepen = 0;
+		for (Pessoa d : dependente) {
+			despDepen += getTotalAbateDespesaDependentes(d);
+		}
+		return despDepen;
+	}
+	
 	@Override
 	public double getBaseDeCalculoSimplificado() {
 		double calculo = 0;
@@ -144,11 +152,7 @@ public class Contribuintes implements Contribuinte{
 
 	@Override
 	public double getBaseDeCalculoCompleto() {
-		double despDepen = 0;
-		for (Pessoa d : dependente) {
-			despDepen = getTotalAbateDespesaDependentes(d);
-		}
-		return getTotalTributavel() - getTotalAbateDespesaTitular() - despDepen;
+		return getTotalTributavel() - getTotalAbateDespesaTitular() - getAbateDepensasTodosDependentes();
 	}
 
 	@Override

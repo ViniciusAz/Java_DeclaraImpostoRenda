@@ -37,4 +37,26 @@ class TestContribuinte {
 	//Testar Calculo da base de pagamento completo com / sem dependentes
 	//Testar Calculo do imposto simples
 	//Testar Calculo do imposto completo	
+
+	@Test
+	public void testCalculaImposto() {
+		Contribuintes c = new Contribuintes(5,"Mario", 17,1,1978);
+		c.cadastraDependente(new Pessoas(10051,"Felipe", 2,5,2005));
+		c.cadastraDependente(new Pessoas(10052,"Fernanda", 6,12,2007));
+
+		c.cadastraDespesa(new Despesa(1, c.getId(), 0, 2, 1600));
+		c.cadastraDespesa(new Despesa(2, c.getId(), 1, 5, 1600));
+				
+		//Testa resultado calculo imposto simples
+		assertEquals((c.getTotalTributavel() - 8000 - (c.getDependentes().size() * 4000)),c.getBaseDeCalculoSimplificado());
+		
+		//Testa resultado do calculo do imposto completo
+		assertEquals((c.getTotalTributavel() - c.getTotalAbateDespesaTitular() - c.getAbateDepensasTodosDependentes()),
+				/* atual = */ c.getBaseDeCalculoCompleto());
+	}	
+	
+	
+	
+	
+	
 }
