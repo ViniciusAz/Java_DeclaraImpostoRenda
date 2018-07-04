@@ -1,7 +1,7 @@
-import java.util.Set;
 
 public interface Pessoa {
-    int getId();
-    String getNome();
-    int getIdade();
+
+    /*@ pure helper @*/ int getId();
+    /*@ pure helper @*/ String getNome();
+    /*@ pure helper @*/ int getIdade();
 }

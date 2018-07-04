@@ -1,4 +1,4 @@
-import java.util.Set;
+import java.util.List;
 
 public interface RendimentoNaoAssalariado extends Rendimento{
     void cadastraValorRecebido(Entrada valor);
@@ -6,6 +6,6 @@ public interface RendimentoNaoAssalariado extends Rendimento{
     double getTotalRecebidoMes(int mes);
     double getDespesaTotalMes(int mes);
     double getTotalTributavelMes(int mes);
-    Set<Entrada> valoresRecebidos();
-    Set<Entrada> valoresGastos();
+    List<Entrada> valoresRecebidos();
+    List<Entrada> valoresGastos();
 }
